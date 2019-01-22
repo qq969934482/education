@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.edu.manager.dao.ManagerDao">
+    <resultMap id="EduUser" type="com.atguigu.edu.common.bean.EduUser" autoMapping="true">
+        <id column="USER_ID" property="userId" jdbcType="INTEGER" />
+        <id column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+        <id column="EMAIL" property="email" jdbcType="VARCHAR" />
+        <id column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <id column="SEX" property="sex" jdbcType="INTEGER" />
+        <id column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <id column="AGE" property="age" jdbcType="INTEGER" />
+        <id column="IS_AVALIBLE" property="isAvalible" jdbcType="INTEGER" />
+    </resultMap>
+    <!--public EduUser  selectAll(@PathVariable("userId") Integer userId);-->
+    <select id="selectAll" resultMap="EduUser" >
+     SELECT * FROM edu_user WHERE USER_ID=#{userId}
+
+    </select>
+    <!-- public List<EduUser> SelectMemberList();
+            userId,userName,性别，手机号，邮箱，地址(AGE)，加入时间，状态
+            USER_ID int(11) NOT NULL学员ID
+            MOBILE varchar(11) NULL手机号
+            EMAIL  varchar(50) NULL邮箱号
+            PASSWORD varchar(64) NULL密码
+            USER_NAME archar(50) NULL用户名
+            SHOW_NAME varchar(50) NULL显示名 （昵称）
+            SEX  tiny int(1) NULL性别 1男 2女
+            AGEtiny int(3) NULL年龄
+            CREATE_TIME  timestamp NULL注册时间
+            IS_AVALIBLE  tinyint(1) NULL是否可用 1正常 2冻结
+            PIC_IMG      varchar(255) NULL用户头像
+            BANNER_URL  varchar(200) NULL个人中心用户背景图片
+            MSG_NUM  i nt(11) NULL站内信未读消息数
+            SYS_MSG_NUM  int(11) NULL
+            LAST_SYSTEM_TIME
+    -->
+    <select id="SelectMemberList" resultMap="EduUser">
+        SELECT  USER_ID,MOBILE,EMAIL,USER_NAME,CREATE_TIME,IS_AVALIBLE,AGE,SEX
+        FROM  edu_user
+    </select>
+    <!--void addEduUser(EduUser eduUser);-->
+    <insert id="addEduUser"  >
+        INSERT INTO  edu_user (MOBILE,EMAIL,USER_NAME,CREATE_TIME,IS_AVALIBLE,AGE,SEX)
+        VALUES (#{mobile},#{email},#{userName},#{createTime},#{isAvalible},#{age},#{sex})
+    </insert>
+    <!-- void deleEduUser(Integer userId);-->
+    <delete id="deleEduUser" >
+        DELETE from edu_user where USER_ID=#{userId}
+    </delete>
+
+
+</mapper>
